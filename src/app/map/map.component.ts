@@ -66,7 +66,9 @@ export class MapComponent implements AfterViewInit {
    // console.log(this.posServ.getPosition()[2].id );
 
    for(const user of this.route){
+
     console.log(user.id);
+    
 }
 
   }
