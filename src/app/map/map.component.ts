@@ -11,7 +11,7 @@ import { PositionService } from '../position.service';
 export class MapComponent implements AfterViewInit {
   private map;
   private marker= new Array();
-  private route;
+  private position;// здесь храним json с начальными метками
 
     ;
 
@@ -48,11 +48,24 @@ export class MapComponent implements AfterViewInit {
   getPosition() {
 
 
-    var LamMarker  = L.marker([39, -98, 100]);
-    this.marker.push(LamMarker);
+   
 
-    this.marker[0].addTo(this.map);
-    this.marker[0].bindPopup('I am raketa');
+    this.position =  this.posServ.getPosition();
+    // console.log(this.posServ.getPosition()[2].id );
+ 
+    for(const tracker of this.position){
+ 
+      
+      this.marker[ tracker.id ] = new L.marker([tracker.lat, tracker.lng, tracker.alt]);
+
+     console.log(tracker.lat);
+     this.marker[tracker.id].addTo(this.map);
+     this.marker[tracker.id].bindPopup(String(tracker.id));
+     
+ }
+
+
+
 
 
     //console.log(this.posServ.getPosition()[0].id );
@@ -70,10 +83,10 @@ export class MapComponent implements AfterViewInit {
 
   playPosition() {
 
-    this.route =  this.posServ.getPosition();
+    this.position =  this.posServ.getPosition();
    // console.log(this.posServ.getPosition()[2].id );
 
-   for(const user of this.route){
+   for(const user of this.position){
 
     console.log(user.id);
     
