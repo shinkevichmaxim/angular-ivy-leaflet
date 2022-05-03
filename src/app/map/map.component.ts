@@ -10,8 +10,10 @@ import { PositionService } from '../position.service';
 })
 export class MapComponent implements AfterViewInit {
   private map;
-  private marker;
+  private marker= new Array();
   private route;
+
+    ;
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -34,10 +36,7 @@ export class MapComponent implements AfterViewInit {
 
     tiles.addTo(this.map);
 
-    this.marker = L.marker([39, -98, 100]);
-
-    this.marker.addTo(this.map);
-    this.marker.bindPopup('I am raketa');
+    
   }
 
   constructor(private posServ: PositionService) {}
@@ -47,9 +46,18 @@ export class MapComponent implements AfterViewInit {
   }
 
   getPosition() {
+
+
+    var LamMarker  = L.marker([39, -98, 100]);
+    this.marker.push(LamMarker);
+
+    this.marker[0].addTo(this.map);
+    this.marker[0].bindPopup('I am raketa');
+
+
     //console.log(this.posServ.getPosition()[0].id );
 
-    this.marker.setLatLng([
+    this.marker[0].setLatLng([
       this.posServ.getPosition()[0].lat + 1,
       this.posServ.getPosition()[0].lng + 1,
     ]);
