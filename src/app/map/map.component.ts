@@ -42,6 +42,8 @@ export class MapComponent implements AfterViewInit {
   }
 
   getPosition() {
+
+    
     this.position = this.posServ.getPosition();
 
     for (const tracker of this.position) {
@@ -50,7 +52,7 @@ export class MapComponent implements AfterViewInit {
           tracker.lat,
           tracker.lng,
           tracker.alt,
-        ]);
+        ], {draggable: true});
 
         //console.log(tracker.lat);
         this.marker[tracker.id].addTo(this.map);
@@ -64,17 +66,25 @@ In order to open several popups, instantiate them using L.popup(latlng, options)
 */
 
       }
-else{//иначе перемещаем его
+else{//иначе перемещаем его и рисуем линию
 
+  var line = L.polyline([this.marker[tracker.id].getLatLng(), [tracker.lat,tracker.lng]], {color: 'red', weight: 1}).addTo(this.map);
+  
   this.marker[tracker.id].setLatLng([
     tracker.lat+ Math.random(),
     tracker.lng+ Math.random(),
-    tracker.alt,
-  ]);
+    tracker.alt,   ]);
+
+   
 
 
+//var line = L.polyline([marker_a.getLatLng(), marker_b.getLatLng()], {color: 'red', weight: 1}).addTo(map);
+ 
+ console.log(this.marker[tracker.id].getLatLng());
 
 }
+
+//var lline = L.polyline([oldMarker[5].getLatLng(), this.marker[5].getLatLng()  ], {color: 'red', weight: 1}).addTo(this.map);
 
     }
 
