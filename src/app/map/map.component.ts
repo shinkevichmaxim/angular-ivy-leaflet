@@ -33,6 +33,10 @@ export class MapComponent implements AfterViewInit {
     );
 
     tiles.addTo(this.map);
+
+
+
+    
   }
 
   constructor(private posServ: PositionService) {}
@@ -48,11 +52,23 @@ export class MapComponent implements AfterViewInit {
 
     for (const tracker of this.position) {
       if (!(tracker.id in this.marker)) {// если маркера нет то создаем
+
+       var greenIcon = L.icon({
+          iconUrl:'./leaf-green.png',
+          shadowUrl:'./leaf-sahdow.png',
+         
+          iconSize:[38,95],
+          shadowSize:[50,64],
+           iconAnchor: [22,94], // Точка отметки находится на значке
+          shadowAnchor:[4,62],
+          popupAnchor:[-3,-76]
+        });
+
         this.marker[tracker.id] = new L.marker([
           tracker.lat,
           tracker.lng,
           tracker.alt,
-        ], {draggable: true});
+        ], {icon:greenIcon, draggable: true});
 
         //console.log(tracker.lat);
         this.marker[tracker.id].addTo(this.map);
@@ -67,9 +83,10 @@ In order to open several popups, instantiate them using L.popup(latlng, options)
 
       }
 else{//иначе перемещаем его и рисуем линию
-
+                          // положение с прошлого шага         новое положение
   var line = L.polyline([this.marker[tracker.id].getLatLng(), [tracker.lat,tracker.lng]], {color: 'red', weight: 1}).addTo(this.map);
   // а вторую точку брать из this.position
+
   this.marker[tracker.id].setLatLng([
     tracker.lat+ Math.random(),
     tracker.lng+ Math.random(),
