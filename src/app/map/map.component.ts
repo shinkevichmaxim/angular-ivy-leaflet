@@ -69,7 +69,7 @@ In order to open several popups, instantiate them using L.popup(latlng, options)
 else{//иначе перемещаем его и рисуем линию
 
   var line = L.polyline([this.marker[tracker.id].getLatLng(), [tracker.lat,tracker.lng]], {color: 'red', weight: 1}).addTo(this.map);
-  
+  // а вторую точку брать из this.position
   this.marker[tracker.id].setLatLng([
     tracker.lat+ Math.random(),
     tracker.lng+ Math.random(),
