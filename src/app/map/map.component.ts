@@ -77,15 +77,17 @@ baseLayers["Tile Layer 1"].addTo(map);
       if (!(tracker.id in this.marker)) {// если маркера нет то создаем
 
        var greenIcon = L.icon({
-          iconUrl:'./leaf-green.png',
-          shadowUrl:'./leaf-sahdow.png',
+          iconUrl:'https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png',
+          shadowUrl:'https://unpkg.com/leaflet@1.6.0/dist/images/marker-shadow.png',
          
-          iconSize:[38,95],
-          shadowSize:[50,64],
-           iconAnchor: [22,94], // Точка отметки находится на значке
-          shadowAnchor:[4,62],
+          iconSize:[ 12, 21],
+          shadowSize:[12, 21 ],
+           iconAnchor: [ 6, 21 ], // Точка отметки находится на значке
+          shadowAnchor:[6, 21],
           popupAnchor:[-3,-76]
         });
+
+
 
         this.marker[tracker.id] = new L.marker([
           tracker.lat,
