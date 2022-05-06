@@ -20,24 +20,47 @@ export class MapComponent implements AfterViewInit {
       zoom: 5,
     });
 
-    const tiles = L.tileLayer(
-      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      {
-        maxZoom: 18,
 
-        minZoom: 3,
+    // массив базовых слоев - тайлы
+    const tiles = {  
+    "OSM1" : L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, minZoom: 3,attribution:'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',}),
 
-        attribution:
-          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      }
-    );
+    "OSM2" : L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, minZoom: 3,attribution:'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',})
+  };
 
-    tiles.addTo(this.map);
+  // массив доп инфы - слои с метками по типу авто или самолеты , активны  или неактивны или зоны аэропортов
+  var overlays = {};
+
+
+  L.control.layers(tiles, overlays).addTo(this.map);
+
+
+    tiles["OSM1"].addTo(this.map);
 
 
 
     
   }
+
+
+
+
+/*
+
+var baselayers = {
+    "Tile Layer 1": L.tileLayer( ),
+    "Tile Layer 2": L.tileLayer(),
+    "Tile Layer 3": L.tileLayer( )
+};
+
+var overlays = {};
+
+L.control.layers(baselayers, overlays).addTo(map);
+
+baseLayers["Tile Layer 1"].addTo(map);
+
+*/
+
 
   constructor(private posServ: PositionService) {}
 
