@@ -25,7 +25,7 @@ export class MapComponent implements AfterViewInit {
     const tiles = {  
     "OSM1" : L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, minZoom: 3,attribution:'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',}),
 
-    "OSM2" : L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, minZoom: 3,attribution:'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',})
+    "Railway" : L.tileLayer('https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png', {maxZoom: 18, minZoom: 3,attribution:'&copy; <a href="http://www.openstreetmap.org/copyright">OpenRailwayMap</a>',})
   };
 
   // массив доп инфы - слои с метками по типу авто или самолеты , активны  или неактивны или зоны аэропортов
