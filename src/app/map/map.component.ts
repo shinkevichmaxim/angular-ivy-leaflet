@@ -12,6 +12,9 @@ export class MapComponent implements AfterViewInit {
   private map;
   private marker = new Array(); // массив с маркерами
   private position; // здесь храним json с начальными метками
+private mockCycle = 0;
+
+
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -71,7 +74,7 @@ baseLayers["Tile Layer 1"].addTo(map);
   getPosition() {
 
     
-    this.position = this.posServ.getPosition();
+    this.position = this.posServ.getPosition( this.mockCycle);
 
     for (const tracker of this.position) {
       if (!(tracker.id in this.marker)) {// если маркера нет то создаем
@@ -113,8 +116,8 @@ else{//иначе перемещаем его и рисуем линию
   // а вторую точку брать из this.position
 
   this.marker[tracker.id].setLatLng([
-    tracker.lat+ Math.random(),
-    tracker.lng+ Math.random(),
+    tracker.lat/*+ Math.random()*/,
+    tracker.lng/*+ Math.random()*/,
     tracker.alt,   ]);
 
    
@@ -123,8 +126,14 @@ else{//иначе перемещаем его и рисуем линию
 //var line = L.polyline([marker_a.getLatLng(), marker_b.getLatLng()], {color: 'red', weight: 1}).addTo(map);
  
  console.log(this.marker[tracker.id].getLatLng());
+// обновляем счетчик после 7 шагов
+
+
 
 }
+
+
+
 
 //var lline = L.polyline([oldMarker[5].getLatLng(), this.marker[5].getLatLng()  ], {color: 'red', weight: 1}).addTo(this.map);
 
@@ -141,14 +150,25 @@ else{//иначе перемещаем его и рисуем линию
 
     //this.marker.bindPopup( String(this.marker.getLatLng().alt) );
     //this.marker.openPopup();
+
+ this.mockCycle = (this.mockCycle < 7)? (++this.mockCycle) : 0;
+
+
   }
 
   playPosition() {
-    this.position = this.posServ.getPosition();
+    
+    //this.position = this.posServ.getPosition( this.mockCycle);
     // console.log(this.posServ.getPosition()[2].id );
-
+/*
     for (const user of this.position) {
       console.log(user.id);
     }
+*/
+setInterval(this.getPosition.bind(this) ,1000);
+
+ 
+
+
   }
 }

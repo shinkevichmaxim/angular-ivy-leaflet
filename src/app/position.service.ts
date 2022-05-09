@@ -21,16 +21,16 @@ export class PositionService {
     private http: HttpClient,
   ) { }
 
-   getPosition(): Position[] {
+   getPosition( mockCycle : number): Position[] {
 
     
 
-   
+   console.log('-'+mockCycle);
     //return this.http.get<Position>(this.positionUrl);
     // this.http.get(this.positionUrl).subscribe((data:any) => b= new Array(23,  32));
     // return b;
    
-    this.http.get('assets/markers.json').subscribe((data: any) => this.markers = data["marker"]);
+    this.http.get('assets/markers' + mockCycle + '.json').subscribe((data: any) => this.markers = data["marker"]);
     
     //console.log(this.markers);
     //alert(stringify(markers));
