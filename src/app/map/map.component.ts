@@ -74,7 +74,7 @@ baseLayers["Tile Layer 1"].addTo(map);
   getPosition() {
 
     
-    this.position = this.posServ.getPosition();
+     this.posServ.getPosition().subscribe((data: any) => this.position = data["marker"]);;
 
     for (const tracker of this.position) {
       if (!(tracker.id in this.marker)) {// если маркера нет то создаем

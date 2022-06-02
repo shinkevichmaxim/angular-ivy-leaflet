@@ -15,7 +15,7 @@ export interface Position {
 })
 export class PositionService {
 
-   markers: Position[]=[];
+   //markers: Position[]=[];
 
    private mockCycle = 0;
 
@@ -23,21 +23,22 @@ export class PositionService {
     private http: HttpClient,
   ) { }
 
-   getPosition( ): Position[] {
+   getPosition( ): Observable<Position[]> {
 
     
+    this.mockCycle = (this.mockCycle < 6)? (++this.mockCycle) : 0;
 
-   console.log('-'+this.mockCycle);
+   console.log('='+this.mockCycle);
     //return this.http.get<Position>(this.positionUrl);
     // this.http.get(this.positionUrl).subscribe((data:any) => b= new Array(23,  32));
     // return b;
    
-    this.http.get('assets/markers' + this.mockCycle + '.json').subscribe((data: any) => this.markers = data["marker"]);
+    //.subscribe((data: any) => this.markers = data["marker"]);
     
     //console.log(this.markers);
     //alert(stringify(markers));
-    this.mockCycle = (this.mockCycle < 7)? (++this.mockCycle) : 0;
-    return  this.markers;
+    
+    return this.http.get<Position[]>('assets/markers' + this.mockCycle + '.json');
 
 
 
