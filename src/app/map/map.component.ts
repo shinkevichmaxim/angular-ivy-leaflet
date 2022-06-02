@@ -12,7 +12,7 @@ export class MapComponent implements AfterViewInit {
   private map;
   private marker = new Array(); // массив с маркерами
   private position; // здесь храним json с начальными метками
-private mockCycle = 0;
+
 
 
 
@@ -74,7 +74,7 @@ baseLayers["Tile Layer 1"].addTo(map);
   getPosition() {
 
     
-    this.position = this.posServ.getPosition( this.mockCycle);
+    this.position = this.posServ.getPosition();
 
     for (const tracker of this.position) {
       if (!(tracker.id in this.marker)) {// если маркера нет то создаем
@@ -151,7 +151,7 @@ else{//иначе перемещаем его и рисуем линию
     //this.marker.bindPopup( String(this.marker.getLatLng().alt) );
     //this.marker.openPopup();
 
- this.mockCycle = (this.mockCycle < 7)? (++this.mockCycle) : 0;
+ 
 
 
   }
