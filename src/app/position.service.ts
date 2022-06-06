@@ -17,7 +17,7 @@ export class PositionService {
 
    //markers: Position[]=[];
 
-   private mockCycle = 0;
+   private mockCycle = -1;
 
   constructor(
     private http: HttpClient,
@@ -25,7 +25,7 @@ export class PositionService {
 
    getPosition( ): Observable<Position[]> {
 
-    
+    // обновляем счетчик после 7 шагов
     this.mockCycle = (this.mockCycle < 6)? (++this.mockCycle) : 0;
 
    console.log('='+this.mockCycle);

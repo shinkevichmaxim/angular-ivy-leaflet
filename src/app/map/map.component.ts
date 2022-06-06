@@ -71,37 +71,35 @@ baseLayers["Tile Layer 1"].addTo(map);
     this.initMap();
   }
 
-  getPosition() {
 
-    
-     this.posServ.getPosition().subscribe((data: any) => this.position = data["marker"]);;
+moveMarkers(){
 
-    for (const tracker of this.position) {
-      if (!(tracker.id in this.marker)) {// если маркера нет то создаем
+  for (const tracker of this.position) {
+    if (!(tracker.id in this.marker)) {// если маркера нет то создаем
 
-       var greenIcon = L.icon({
-          iconUrl:'https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png',
-          shadowUrl:'https://unpkg.com/leaflet@1.6.0/dist/images/marker-shadow.png',
-         
-          iconSize:[ 12, 21],
-          shadowSize:[12, 21 ],
-           iconAnchor: [ 6, 21 ], // Точка отметки находится на значке
-          shadowAnchor:[6, 21],
-          popupAnchor:[-3,-76]
-        });
+     var greenIcon = L.icon({
+        iconUrl:'https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png',
+        shadowUrl:'https://unpkg.com/leaflet@1.6.0/dist/images/marker-shadow.png',
+       
+        iconSize:[ 12, 21],
+        shadowSize:[12, 21 ],
+        iconAnchor: [ 6, 21 ], // Точка отметки находится на значке
+        shadowAnchor:[6, 21],
+        popupAnchor:[-3,-20]
+      });
 
 
 
-        this.marker[tracker.id] = new L.marker([
-          tracker.lat,
-          tracker.lng,
-          tracker.alt,
-        ], {icon:greenIcon, draggable: true});
+      this.marker[tracker.id] = new L.marker([
+        tracker.lat,
+        tracker.lng,
+        tracker.alt,
+      ], {icon:greenIcon, draggable: true});
 
-        //console.log(tracker.lat);
-        this.marker[tracker.id].addTo(this.map);
-        //this.map.addLayer(this.marker[tracker.id]);
-        this.marker[tracker.id].bindPopup('<b>'+String(tracker.id)+'</b> ----',{closeOnClick:false,autoClose: false}).openPopup(); // разобраться с popup
+      //console.log(tracker.lat);
+      this.marker[tracker.id].addTo(this.map);
+      //this.map.addLayer(this.marker[tracker.id]);
+      this.marker[tracker.id].bindPopup('<b>'+String(tracker.id)+'</b> ----',{closeOnClick:false,autoClose: false}).openPopup(); // разобраться с popup
 /*Let me quote the Leaflet documentation on L.Popup:
 
 Used to open popups in certain places of the map. Use Map.openPopup to open popups while making sure that only one popup is open at one time (recommended for usability), or use Map.addLayer to open as many as you want.
@@ -109,66 +107,40 @@ Used to open popups in certain places of the map. Use Map.openPopup to open popu
 In order to open several popups, instantiate them using L.popup(latlng, options), then .addTo(map) them.
 */
 
-      }
+    }
 else{//иначе перемещаем его и рисуем линию
-                          // положение с прошлого шага         новое положение
-  var line = L.polyline([this.marker[tracker.id].getLatLng(), [tracker.lat,tracker.lng]], {color: 'red', weight: 1}).addTo(this.map);
-  // а вторую точку брать из this.position
+                        // положение с прошлого шага         новое положение
+var line = L.polyline([this.marker[tracker.id].getLatLng(), [tracker.lat,tracker.lng]], {color: 'red', weight: 1}).addTo(this.map);
+// а вторую точку брать из this.position
 
-  this.marker[tracker.id].setLatLng([
-    tracker.lat/*+ Math.random()*/,
-    tracker.lng/*+ Math.random()*/,
-    tracker.alt,   ]);
-
-   
+this.marker[tracker.id].setLatLng([
+  tracker.lat/*+ Math.random()*/,
+  tracker.lng/*+ Math.random()*/,
+  tracker.alt,   ]);
 
 
-//var line = L.polyline([marker_a.getLatLng(), marker_b.getLatLng()], {color: 'red', weight: 1}).addTo(map);
- 
- console.log(this.marker[tracker.id].getLatLng());
-// обновляем счетчик после 7 шагов
+console.log(this.marker[tracker.id].getLatLng());
+
+}
+}
 
 
 
 }
 
+  getPosition() {
 
-
-
-//var lline = L.polyline([oldMarker[5].getLatLng(), this.marker[5].getLatLng()  ], {color: 'red', weight: 1}).addTo(this.map);
-
-    }
-
-    //console.log(this.posServ.getPosition()[0].id );
-    /*
-    this.marker[0].setLatLng([
-      this.posServ.getPosition()[0].lat + 1,
-      this.posServ.getPosition()[0].lng + 1,
-    ]);
-*/
-    // this.marker.setLatLng( [ this.marker.getLatLng().lat +1  , -88.5795, 100] );
-
-    //this.marker.bindPopup( String(this.marker.getLatLng().alt) );
-    //this.marker.openPopup();
-
- 
-
-
+    
+     this.posServ.getPosition().subscribe((data: any) => {this.position = data["marker"];
+      this.moveMarkers(); });
+     // надо добавить обработку ошибок и тд с выводдом в экран
   }
+
 
   playPosition() {
     
-    //this.position = this.posServ.getPosition( this.mockCycle);
-    // console.log(this.posServ.getPosition()[2].id );
-/*
-    for (const user of this.position) {
-      console.log(user.id);
-    }
-*/
-setInterval(this.getPosition.bind(this) ,1000);
-
- 
-
+   
+      setInterval(this.getPosition.bind(this) ,1500);
 
   }
 }
